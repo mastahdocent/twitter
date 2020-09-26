@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 
+from decouple import config
 import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -22,10 +23,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'esid2cv21q)ac&j+!#75o0e54ek1%%&%gv5x#^28h6muk)7()1'
+SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config("DEBUG", cast=bool, default=False)
 
 ALLOWED_HOSTS = []
 
@@ -85,11 +86,11 @@ WSGI_APPLICATION = 'twitter.wsgi.application'
 
 DATABASES = {
     'default': {
-        'HOST': '127.0.0.1',
+        'HOST': config("DB_HOST", default=""),
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'twitter',
-        'USER': 'postgres',
-        'PASSWORD': 'p4ssw0rd',
+        'NAME': config("DB_NAME", default=""),
+        'USER': config("DB_USER", default=""),
+        'PASSWORD': config("DB_PASSWORD", default=""),
     }
 }
 
